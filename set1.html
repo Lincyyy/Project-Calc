@@ -73,24 +73,24 @@
             if (email === user.email && password === user.password) {
                 alert("Login successful!");
 
-                // Move to the calculator section
+                
                 document.getElementById('loginSection').style.display = 'none';
                 document.getElementById('calculatorSection').style.display = 'block';
 
-                // Display welcome message in calculator section
+               
                 document.getElementById('welcomeMessage').innerHTML = `You have registered for the <b>${getOperatorName(user.operator)}</b>.<br>Welcome, ${user.name}.`;
             } else {
                 alert("Invalid login credentials! Please try again.");
             }
         }
 
-        // Function to perform calculation based on the user's chosen operator
+      
         function calculate() {
             let input1 = parseFloat(document.getElementById('input1').value);
             let input2 = parseFloat(document.getElementById('input2').value);
             let result;
 
-            // Perform the operation based on the operator chosen during signup
+           
             switch (user.operator) {
                 case '+':
                     result = input1 + input2;
@@ -108,7 +108,7 @@
             document.getElementById('output').value = result;
         }
 
-        // Helper function to convert operator to readable text
+        
         function getOperatorName(operator) {
             switch (operator) {
                 case '+':
