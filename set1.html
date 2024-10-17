@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator App</title>
+    <link rel="stylesheet" href="set1.css">
+</head>
+<body>
+
+    <!-- Signup Section -->
+    <div id="signupSection" class="container">
+        <h2>Signup</h2>
+        <form id="signupForm">
+            Name: <input type="text" id="signupName" required><br><br>
+            Email: <input type="email" id="signupEmail" required><br><br>
+            Password: <input type="password" id="signupPassword" required><br><br>
+            Choose Operator:
+            <select id="signupOperator" required>
+                <option value="+">Addition</option>
+                <option value="-">Subtraction</option>
+                <option value="*">Multiplication</option>
+            </select><br><br>
+            <button type="button" onclick="signup()">Signup</button>
+        </form>
+    </div>
+
+    <!-- Login Section -->
+    <div id="loginSection" class="container" style="display:none;">
+        <h2>Login</h2>
+        <form id="loginForm">
+            Email: <input type="email" id="loginEmail" required><br><br>
+            Password: <input type="password" id="loginPassword" required><br><br>
+            <button type="button" onclick="login()">Login</button>
+        </form>
+    </div>
+
+    <!-- Calculator Section -->
+    <div id="calculatorSection" class="container" style="display:none;">
+        <h2 id="welcomeMessage"></h2>
+        <div id="calculator">
+            Input 1: <input type="number" id="input1"><br><br>
+            Input 2: <input type="number" id="input2"><br><br>
+            Output: <input type="text" id="output" readonly><br><br>
+            <button type="button" onclick="calculate()">Calculate</button>
+        </div>
+    </div>
+
+    <script>
+        let user = {}; 
+
+        
+        function signup() {
+            let name = document.getElementById('signupName').value;
+            let email = document.getElementById('signupEmail').value;
+            let password = document.getElementById('signupPassword').value;
+            let operator = document.getElementById('signupOperator').value;
+
+            
+            user = { name, email, password, operator };
+
+            
+            document.getElementById('signupSection').style.display = 'none';
+            document.getElementById('loginSection').style.display = 'block';
+        }
+
+        
+        function login() {
+            let email = document.getElementById('loginEmail').value;
+            let password = document.getElementById('loginPassword').value;
+
+            
+            if (email === user.email && password === user.password) {
+                alert("Login successful!");
+
+                // Move to the calculator section
+                document.getElementById('loginSection').style.display = 'none';
+                document.getElementById('calculatorSection').style.display = 'block';
+
+                // Display welcome message in calculator section
+                document.getElementById('welcomeMessage').innerHTML = `You have registered for the <b>${getOperatorName(user.operator)}</b>.<br>Welcome, ${user.name}.`;
+            } else {
+                alert("Invalid login credentials! Please try again.");
+            }
+        }
+
+        // Function to perform calculation based on the user's chosen operator
+        function calculate() {
+            let input1 = parseFloat(document.getElementById('input1').value);
+            let input2 = parseFloat(document.getElementById('input2').value);
+            let result;
+
+            // Perform the operation based on the operator chosen during signup
+            switch (user.operator) {
+                case '+':
+                    result = input1 + input2;
+                    break;
+                case '-':
+                    result = input1 - input2;
+                    break;
+                case '*':
+                    result = input1 * input2;
+                    break;
+                default:
+                    result = "Invalid Operation";
+            }
+
+            document.getElementById('output').value = result;
+        }
+
+        // Helper function to convert operator to readable text
+        function getOperatorName(operator) {
+            switch (operator) {
+                case '+':
+                    return "Addition";
+                case '-':
+                    return "Subtraction";
+                case '*':
+                    return "Multiplication";
+                default:
+                    return "Unknown Operation";
+            }
+        }
+    </script>
+
+</body>
+</html>
